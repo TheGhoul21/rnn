@@ -16,29 +16,32 @@ function GRU(inputSize, hiddenSize) {
 	 */
 
 	const vetmul = (a,b) => {
+		if(!a.length) {
+			throw new Error("a is not a vector");
+		}
+		if(!b.length) {
+			throw new Error("b is not a vector");
+		}
+
+		if(a.length != b.length) {
+			throw new Error("a and b should have same lengths");
+		}
+
 		return a.reduce((curr,val,index) => {
 			return curr += val * b[index];
 		},0)
 	}
 
-	// console.log(vetmul())
-
+	
 	const matmul = (A,B) => {
 		console.table(A);
 		console.table(B);
 		const result = []
 		for(let r = 0; r < A.length; r++) {
-			
 			if(B[0].length) {
 				// maybe a matrix
 				result[r] = [];
 				for(let c = 0; c < B[0].length; c++) {
-					const vec2 = []
-
-					
-
-
-
 					result[r][c] = vetmul(A[r], A[r].map((v,i) => B[i][c]))
 				}
 			} else {
@@ -49,28 +52,7 @@ function GRU(inputSize, hiddenSize) {
 		return result
 	}
 
-	console.table(matmul([
-		[1,0],
-		[0,1]
-	], [1,2]))
-
-
-	console.table(matmul([
-		[1,0],
-		[0,2]
-	], [
-		[1,2],
-		[3,2],
-	]))
-
-	console.table(matmul([
-		[1,	0],
-		[0,	1],
-		[0,	1]
-	], [
-		[1],
-		[4],
-	]))
+	
 
 
 
